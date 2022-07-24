@@ -185,10 +185,11 @@ public class ModeloMySQL implements Modelo {
     private Customer rsToCustomer(ResultSet rs) throws SQLException {
         int id = rs.getInt("id_customer");
         String name = rs.getString("name");
-//        String surname = rs.getString("surname");
-//        String dateBirth = rs.getString("date_birth");
-//        String mail = rs.getString("mail");
-//        int balance = rs.getInt("balance");
+        // Datos de la cuenta que todavía no se usan.
+        // String surname = rs.getString("surname");
+        // String dateBirth = rs.getString("date_birth");
+        // String mail = rs.getString("mail");
+        // int balance = rs.getInt("balance");
         return new Customer(id, name);
     }
 

@@ -17,7 +17,7 @@ public class Conexion {
     public static DataSource getDataSource() {
         if (dataSource == null) {
             try {
-                String URL = "jdbc:mysql://root:PepeFlag@localhost:3306/bd_accounts?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+                String URL = "jdbc:mysql://user:pass@localhost:3306/bd_accounts?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 dataSource = new BasicDataSource();
                 dataSource.setUrl(URL);
