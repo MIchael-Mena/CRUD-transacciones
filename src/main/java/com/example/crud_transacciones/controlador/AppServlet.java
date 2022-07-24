@@ -125,7 +125,7 @@ public class AppServlet extends HttpServlet {
             Properties props = new Properties();
             props.load(is);
             // Cambiar entre modelo HC y modelo SQL.
-            String tipoModelo = props.getProperty("SQL");
+            String tipoModelo = props.getProperty("HC");
             m = ModeloFactory.getInstance().crearModelo(tipoModelo);
         } catch (IOException ex) {
             throw new ServletException("Error de E/S al al leer 'config' para iniciar el Servlet", ex);

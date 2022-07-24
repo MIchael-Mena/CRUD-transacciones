@@ -66,10 +66,10 @@ public class ModeloMySQL implements Modelo {
     @Override
     public SingleAccount getSingleAccount(int id) {
         SingleAccount account = new SingleAccount(this.getCustomerById(id));
-        this.getDepositFor(account);
-        this.getTransferDepositFor(account);
-        this.getWithdrawFor(account);
-        this.getTransferWithdrawFor(account);
+        this.registerDepositFor(account);
+        this.registerTransferDepositFor(account);
+        this.registerWithdrawFor(account);
+        this.registerTransferWithdrawFor(account);
         // TODO: Implementar el ordenamiento de las transacciones de una cuenta
         // account.sortTransactionsByDateTime();
         return account;
@@ -102,22 +102,22 @@ public class ModeloMySQL implements Modelo {
     public int withdraw(int amount, int idAccount) {
         // Primero se verifica que la cuenta exista, que la cantidad a retirar sea mayor a 0 y que haya saldo suficiente.
         Withdraw.registerOn(amount, this.getSingleAccount(idAccount));
-        return performTransaction(amount, idAccount, 0, REGISTER_WITHDRAW);
+        return registerTransactionInBDFor(amount, idAccount, 0, REGISTER_WITHDRAW);
     }
 
     @Override
     public int deposit(int amount, int idAccount) {
         Deposit.registerOn(amount, this.getSingleAccount(idAccount));
-        return performTransaction(amount, idAccount, 0, REGISTER_DEPOSIT);
+        return registerTransactionInBDFor(amount, idAccount, 0, REGISTER_DEPOSIT);
     }
 
     @Override
     public int transfer(int amount, int idOriginAccount, int idDestinationAccount) {
         Transfer.amountFromOriginToDestination(amount, this.getSingleAccount(idOriginAccount), this.getSingleAccount(idDestinationAccount));
-        return performTransaction(amount, idOriginAccount, idDestinationAccount, REGISTER_TRANSFER);
+        return registerTransactionInBDFor(amount, idOriginAccount, idDestinationAccount, REGISTER_TRANSFER);
     }
 
-    private int performTransaction(int amount, int idAccount, int anotherIdAccount, String transaction) {
+    private int registerTransactionInBDFor(int amount, int idAccount, int anotherIdAccount, String transaction) {
         AtomicInteger registersModified = new AtomicInteger();
         this.tryConnect(transaction, "Error al intentar registrar transacción para cliente con ID " + idAccount,
                 ps -> {
@@ -146,27 +146,27 @@ public class ModeloMySQL implements Modelo {
         ps.setString(1, customer.getName());
     }
 
-    private void getTransferDepositFor(SingleAccount account) {
-        this.getTransactionFor(GET_TRANSFER_DEPOSIT, account,
+    private void registerTransferDepositFor(SingleAccount account) {
+        this.registerTransactionFor(GET_TRANSFER_DEPOSIT, account,
                 rs -> Transfer.registerAnDepositFor(rs.getInt("amount"), account, this.getCustomerById(rs.getInt("idOrigin")))
         );
     }
 
-    private void getTransferWithdrawFor(SingleAccount account) {
-        this.getTransactionFor(GET_TRANSFER_WITHDRAW, account,
+    private void registerTransferWithdrawFor(SingleAccount account) {
+        this.registerTransactionFor(GET_TRANSFER_WITHDRAW, account,
                 rs -> Transfer.registerAnWithdrawFor(rs.getInt("amount"), account, this.getCustomerById(rs.getInt("idDestiny")))
         );
     }
 
-    private void getWithdrawFor(SingleAccount account) {
-        this.getTransactionFor(GET_WITHDRAW, account, rs -> Withdraw.registerOn(rs.getInt("amount"), account));
+    private void registerWithdrawFor(SingleAccount account) {
+        this.registerTransactionFor(GET_WITHDRAW, account, rs -> Withdraw.registerOn(rs.getInt("amount"), account));
     }
 
-    private void getDepositFor(SingleAccount account) {
-        this.getTransactionFor(GET_DEPOSIT, account, rs -> Deposit.registerOn(rs.getInt("amount"), account));
+    private void registerDepositFor(SingleAccount account) {
+        this.registerTransactionFor(GET_DEPOSIT, account, rs -> Deposit.registerOn(rs.getInt("amount"), account));
     }
 
-    private void getTransactionFor(String queryGetTransaction, SingleAccount account, ClosureQueryResult aClosure) {
+    private void registerTransactionFor(String queryGetTransaction, SingleAccount account, ClosureQueryResult aClosure) {
         this.tryConnect(queryGetTransaction, "Error al obtener la transacción",
                 ps -> this.tryExecuteQuery(ps, account.getId(), rs -> {
                     while (rs.next()) {
