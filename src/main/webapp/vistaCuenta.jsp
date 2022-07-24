@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="WEB-INF/pages/comunes/inicioHTML.jsp"/>
 <jsp:include page="WEB-INF/pages/comunes/inicioHead.jsp"/>
-<title>Editando a ${account.name}</title>
+<title>Editando a ${account.customer.name}</title>
 <jsp:include page="WEB-INF/pages/comunes/finHead.jsp"/>
 <jsp:include page="WEB-INF/pages/comunes/nav.jsp"/>
 
@@ -9,11 +9,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-3 ">
-                <h1 class="h3">Cuenta a nombre de: ${account.name}</h1>
+                <h1 class="h3">Cuenta a nombre de: ${account.customer.name}</h1>
             </div>
             <div class="col-md-6 col-sm-3">
                 <c:choose>
-                    <c:when test="${!otherAccounts.isEmpty()}">
+                    <c:when test="${!otherCustomers.isEmpty()}">
                         <div class="float-end">
                             <a href="#" class="btn btn-success"
                                data-bs-toggle="modal" data-bs-target="#modalTransferencia">Realizar Transferencia</a>

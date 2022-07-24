@@ -13,7 +13,7 @@
         </div>
         <div class="row ">
         <c:choose>
-            <c:when test="${listAccounts.isEmpty()}">
+            <c:when test="${listCustomers.isEmpty()}">
                 <div class="col-12">
                     <p class="display-5 text-danger">Cree una cuenta para utilizar el cajero</p>
                 </div>

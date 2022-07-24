@@ -1,4 +1,7 @@
-import com.example.crud_transacciones.modelo.*;
+import com.example.crud_transacciones.modelo.account.Customer;
+import com.example.crud_transacciones.modelo.account.SingleAccount;
+import com.example.crud_transacciones.modelo.transactions.Deposit;
+import com.example.crud_transacciones.modelo.transactions.Transfer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,11 +10,16 @@ public class TransferTest {
 
     private SingleAccount originAccount;
     private SingleAccount destinationAccount;
+    private Customer originCustomer;
+    private Customer destinyCustomer;
 
     @BeforeEach
     void setUp() {
-        originAccount = new SingleAccount(1,"origen");
-        destinationAccount = new SingleAccount(2,"destino");
+        originCustomer = new Customer(1,"origen");
+        destinyCustomer = new Customer(2,"destino");
+
+        originAccount = new SingleAccount(originCustomer);
+        destinationAccount = new SingleAccount(destinyCustomer);
 
         Deposit.registerOn(10, originAccount);
         Deposit.registerOn(10, destinationAccount);
@@ -81,7 +89,19 @@ public class TransferTest {
         Assertions.assertThrows(IllegalStateException.class,
                 ()->Transfer.amountFromOriginToDestination(20, originAccount, destinationAccount),
                 "Fondos insuficientes para realizar la transacción");
-        Assertions.assertTrue(originAccount.getBalance() == 10);
-        Assertions.assertTrue(destinationAccount.getBalance() == 10);
+        Assertions.assertEquals(10, originAccount.getBalance());
+        Assertions.assertEquals(10, destinationAccount.getBalance());
+    }
+
+    @Test
+    void sePuedeRegistrarUnaTransferenciaDeRetiroParaUnaCuenta(){
+        Transfer.registerAnWithdrawFor(2, originAccount, destinyCustomer);
+        Assertions.assertEquals(8, originAccount.getBalance());
+    }
+
+    @Test
+    void sePuedeRegistrarUnaTransferenciaDeDepositoParaUnaCuenta(){
+        Transfer.registerAnDepositFor(2, destinationAccount, originCustomer);
+        Assertions.assertEquals(12, destinationAccount.getBalance());
     }
 }

@@ -1,4 +1,6 @@
-package com.example.crud_transacciones.modelo;
+package com.example.crud_transacciones.modelo.transactions;
+
+import com.example.crud_transacciones.modelo.account.SingleAccount;
 
 public class Deposit implements AccountTransaction {
 

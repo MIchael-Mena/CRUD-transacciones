@@ -11,8 +11,8 @@
                         <label for="id" class="form-label">Seleccionar una cuenta: </label>
                         <select class="form-select" id="id" name="id" >
                             <%--                            <option selected>Seleccionar una cuenta:</option>--%>
-                            <c:forEach items="${listAccounts}" var="account">
-                                <option value="${account.id}">${account.name}</option>
+                            <c:forEach items="${listCustomers}" var="customer">
+                                <option value="${customer.id}">${customer.name}</option>
                                 <%--                               <option value="2">Two</option>--%>
                             </c:forEach>
                         </select>

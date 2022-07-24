@@ -1,4 +1,4 @@
-package com.example.crud_transacciones.modelo;
+package com.example.crud_transacciones.modelo.transactions;
 
 public interface AccountTransaction {
 

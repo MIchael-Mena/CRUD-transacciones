@@ -1,9 +1,16 @@
-package com.example.crud_transacciones.modelo;
+package com.example.crud_transacciones.modelo.transactions;
+
+import com.example.crud_transacciones.modelo.account.Customer;
+import com.example.crud_transacciones.modelo.account.SingleAccount;
 
 public class TransferWithdrawLeg extends TransferLeg {
 
     public TransferWithdrawLeg(Transfer aTransfer, SingleAccount anAccount) {
         super(aTransfer, anAccount);
+    }
+
+    public TransferWithdrawLeg(Transfer aTransfer, Customer anCustomer) {
+        super(aTransfer, anCustomer);
     }
 
     @Override

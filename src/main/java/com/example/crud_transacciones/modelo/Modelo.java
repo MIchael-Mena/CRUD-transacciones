@@ -1,23 +1,26 @@
 package com.example.crud_transacciones.modelo;
 
+import com.example.crud_transacciones.modelo.account.Customer;
+import com.example.crud_transacciones.modelo.account.SingleAccount;
+
 import java.util.List;
 
 public interface Modelo {
 
-    List<SingleAccount> getAccounts();
+    List<Customer> getAllCustomers();
 
-    List<SingleAccount> getOtherAccounts(int id);
+    List<Customer> getOtherCustomers(int id);
 
     SingleAccount getSingleAccount(int id);
 
-    int createAccount(String aName);
+    int createAccount(Customer customer);
 
     int removeAccount(int id);
 
-    void withdraw(int amount, int idAccount);
+    int withdraw(int amount, int idAccount);
 
-    void deposit(int amount, int idAccount);
+    int deposit(int amount, int idAccount);
 
-    void transfer(int amount, int idOriginAccount, int idDestinationAccount);
+    int transfer(int amount, int idOriginAccount, int idDestinationAccount);
 
 }

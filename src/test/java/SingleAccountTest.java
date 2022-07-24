@@ -1,7 +1,7 @@
-import com.example.crud_transacciones.modelo.Deposit;
-import com.example.crud_transacciones.modelo.User;
-import com.example.crud_transacciones.modelo.SingleAccount;
-import com.example.crud_transacciones.modelo.Withdraw;
+import com.example.crud_transacciones.modelo.account.Customer;
+import com.example.crud_transacciones.modelo.transactions.Deposit;
+import com.example.crud_transacciones.modelo.account.SingleAccount;
+import com.example.crud_transacciones.modelo.transactions.Withdraw;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ public class SingleAccountTest {
 
     @BeforeEach
     void setUp() {
-        account = new SingleAccount(1,"juan");
+        account = new SingleAccount(new Customer(1,"juan"));
     }
 
     @Test

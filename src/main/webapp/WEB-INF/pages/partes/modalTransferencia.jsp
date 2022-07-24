@@ -15,8 +15,8 @@
                             <%--Seria mas correcto que el usuario escriba el id de la cuenta a la que va a transferir--%>
                             <label for="idDestiny" class="form-label">Seleccionar una cuenta: </label>
                             <select class="form-select" id="idDestiny" name="idDestiny">
-                                <c:forEach items="${otherAccounts}" var="destinyAccount">
-                                    <option value="${destinyAccount.id}">${destinyAccount.name}</option>
+                                <c:forEach items="${otherCustomers}" var="destinyCustomer">
+                                    <option value="${destinyCustomer.id}">${destinyCustomer.name}</option>
                                 </c:forEach>
                             </select>
 

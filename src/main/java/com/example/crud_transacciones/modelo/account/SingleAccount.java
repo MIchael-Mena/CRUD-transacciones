@@ -1,17 +1,24 @@
-package com.example.crud_transacciones.modelo;
+package com.example.crud_transacciones.modelo.account;
+
+import com.example.crud_transacciones.modelo.transactions.AccountTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SingleAccount {
 
-    private final String name;
-    private final int id;
+/*    private final String name;
+    private final int id;*/
+    private final Customer dataCustomer;
     private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();
 
-    public SingleAccount(int id, String aName) {
+/*    public SingleAccount(int id, String aName) {
         this.id = id;
         this.name = aName;
+    }*/
+
+    public SingleAccount(Customer customer){
+        this.dataCustomer = customer;
     }
 
     public int getBalance() {
@@ -36,15 +43,15 @@ public class SingleAccount {
         return this.transactions.contains(aTransaction);
     }
 
-    public String getName() {
-        return this.name;
+    public Customer getCustomer() {
+        return this.dataCustomer;
     }
 
     public int getId() {
-        return this.id;
+        return this.dataCustomer.getId();
     }
 
     public List<AccountTransaction> getTransactions() {
-        return new ArrayList(this.transactions) ;
+        return new ArrayList(this.transactions);
     }
 }

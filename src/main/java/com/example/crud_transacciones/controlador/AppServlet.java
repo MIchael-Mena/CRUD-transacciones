@@ -1,6 +1,7 @@
 package com.example.crud_transacciones.controlador;
 
 import com.example.crud_transacciones.modelo.*;
+import com.example.crud_transacciones.modelo.account.Customer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,16 +57,16 @@ public class AppServlet extends HttpServlet {
         ClosureRedirect redirectToSimulador = () -> redirectToSimulador(request, response);
         switch (accion) {
             case "create":
-                model.createAccount(request.getParameter("name"));
+                model.createAccount(new Customer(request.getParameter("name")));
                 redirectToSimulador.execute();
                 break;
             case "withdraw":
                 ClosureTransaction withdraw = (anAmount, anIdAccount)-> model.withdraw(anAmount, anIdAccount);
-                chargeTransaction(request, withdraw, redirectToSimulador);
+                performTransaction(request, withdraw, redirectToSimulador);
                 break;
             case "deposit":
                 ClosureTransaction deposit = (anAmount, anIdAccount)-> model.deposit(anAmount, anIdAccount);
-                chargeTransaction(request, deposit, redirectToSimulador);
+                performTransaction(request, deposit, redirectToSimulador);
                 break;
             case "transfer":
                 int idAccountDestiny = Integer.parseInt(request.getParameter("idDestiny"));
@@ -73,12 +74,12 @@ public class AppServlet extends HttpServlet {
                 ClosureRedirect redirectToInfo = () -> this.redirectToVistaCuenta(request, response, Integer.parseInt(request.getParameter("id")));
                 ClosureTransaction transfer = (anAmount, anAccount) -> model.transfer(anAmount, anAccount, idAccountDestiny);
 
-                chargeTransaction(request, transfer, redirectToInfo);
+                performTransaction(request, transfer, redirectToInfo);
                 break;
         }
     }
 
-    private void chargeTransaction(HttpServletRequest request, ClosureTransaction aTransaction, ClosureRedirect aRedirect)
+    private void performTransaction(HttpServletRequest request, ClosureTransaction aTransaction, ClosureRedirect aRedirect)
             throws ServletException, IOException {
         int idAccount = Integer.parseInt(request.getParameter("id"));
         String stringAmount = request.getParameter("amount");
@@ -102,7 +103,7 @@ public class AppServlet extends HttpServlet {
 
     private void redirectToSimulador(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("listAccounts", model.getAccounts());
+        session.setAttribute("listCustomers", model.getAllCustomers());
 /*        request.setAttribute("listAccounts", model.getAccounts());
         request.getRequestDispatcher(URI_SIMULADOR).forward(request, response);*/
         response.sendRedirect(URI_SIMULADOR);
@@ -111,7 +112,7 @@ public class AppServlet extends HttpServlet {
     private void redirectToVistaCuenta(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("account", model.getSingleAccount(id));
-        session.setAttribute("otherAccounts", model.getOtherAccounts(id));
+        session.setAttribute("otherCustomers", model.getOtherCustomers(id));
 /*        request.setAttribute("account", model.getSingleAccount(id));
         request.setAttribute("otherAccounts", model.getOtherAccounts(id));
         request.getRequestDispatcher(URI_VISTACUENTA).forward(request, response);*/
@@ -123,7 +124,8 @@ public class AppServlet extends HttpServlet {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties")) {
             Properties props = new Properties();
             props.load(is);
-            String tipoModelo = props.getProperty("HC");
+            // Cambiar entre modelo HC y modelo SQL.
+            String tipoModelo = props.getProperty("SQL");
             m = ModeloFactory.getInstance().crearModelo(tipoModelo);
         } catch (IOException ex) {
             throw new ServletException("Error de E/S al al leer 'config' para iniciar el Servlet", ex);

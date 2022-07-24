@@ -1,4 +1,7 @@
-package com.example.crud_transacciones.modelo;
+package com.example.crud_transacciones.modelo.transactions;
+
+import com.example.crud_transacciones.modelo.account.Customer;
+import com.example.crud_transacciones.modelo.account.SingleAccount;
 
 public class TransferDepositLeg extends TransferLeg {
 
@@ -6,6 +9,9 @@ public class TransferDepositLeg extends TransferLeg {
         super(aTransfer, anAccount);
     }
 
+    public TransferDepositLeg(Transfer aTransfer, Customer anCustomer) {
+        super(aTransfer, anCustomer);
+    }
     @Override
     public int affectBalance(int aBalance) {
         return aBalance + this.getValue();
