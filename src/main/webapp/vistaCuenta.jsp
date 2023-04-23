@@ -5,7 +5,7 @@
 <jsp:include page="WEB-INF/pages/comunes/finHead.jsp"/>
 <jsp:include page="WEB-INF/pages/comunes/nav.jsp"/>
 
-<section class="py-3">
+<main class="py-3">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-3 ">
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-</section>
+</main>
 
 
 <jsp:include page="WEB-INF/pages/partes/modalConsultaBaja.jsp"/>

@@ -1,4 +1,4 @@
-
+        <link href="${pageContext.request.contextPath}/assets/styles.css" rel="stylesheet" />
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/icon_atm.ico" />
         <!-- Bootstrap icons-->

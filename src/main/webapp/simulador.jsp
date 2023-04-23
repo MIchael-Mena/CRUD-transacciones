@@ -5,7 +5,7 @@
 <jsp:include page="WEB-INF/pages/comunes/finHead.jsp"/>
 <jsp:include page="WEB-INF/pages/comunes/nav.jsp"/>
 
-<div class="p-5 mb-4 bg-light rounded-3">
+<main class="p-5 bg-light rounded-3">
     <div class="container-fluid py-5 col-8">
         <div class="row">
             <a href="#" class="btn btn-success"
@@ -28,7 +28,7 @@
             <jsp:include page="WEB-INF/pages/partes/cardCuentas.jsp"/>
         </div>
     </div>
-</div>
+</main>
 
 <jsp:include page="WEB-INF/pages/partes/modalCrearCuenta.jsp"/>
 <jsp:include page="WEB-INF/pages/partes/modalTransaccionEstado.jsp"/>
