@@ -99,8 +99,6 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.example.crud_transacciones.controlador.AppServlet</mainClass>
                         </manifest>
                     </archive>
