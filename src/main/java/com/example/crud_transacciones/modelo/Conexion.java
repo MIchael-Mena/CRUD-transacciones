@@ -25,9 +25,9 @@ public class Conexion {
                 if(environment != null) {
                     props.load(new FileInputStream(environment));
                 } else {
-                    props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
                     props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("secret.properties"));
                 }
+                props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
                 String URL = props.getProperty("db.url");
                 String username = props.getProperty("db.username");
                 String password = props.getProperty("db.password");
@@ -37,7 +37,8 @@ public class Conexion {
                 dataSource.setUrl(URL);
                 dataSource.setUsername(username);
                 dataSource.setPassword(password);
-                dataSource.setInitialSize(50);
+                dataSource.setInitialSize(5);
+
             } catch (IOException ex) {
                 throw new RuntimeException("Error al cargar el archivo de propiedades", ex);
             } catch (ClassNotFoundException ex) {
@@ -52,5 +53,10 @@ public class Conexion {
     public static Connection getConnection() throws SQLException {
         return getDataSource().getConnection();
     }
+
+    public static void close() throws SQLException {
+        con.close();
+    }
+
 }
 
