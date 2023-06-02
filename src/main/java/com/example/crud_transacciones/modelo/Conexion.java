@@ -21,9 +21,10 @@ public class Conexion {
                 Properties props = new Properties();
                 InputStream is;
 
-                String environment = System.getProperty("production.env");
+                String environment = System.getProperty("/etc/secrets/production.env");
                 if(environment != null) {
-                    props.load(new FileInputStream(environment));
+//                    props.load(new FileInputStream(environment));
+                    props.load(new FileInputStream("/etc/secrets/production.env"));
                 } else {
                     props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("secret.properties"));
                 }
