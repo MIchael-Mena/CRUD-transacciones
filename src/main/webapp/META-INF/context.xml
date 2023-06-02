@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/CRUD-transacciones"/>
+<Context path="/"/>
+<!--<Context path="/CRUD-transacciones"/>-->
 
 <!--<?xml version="1.0" encoding="ISO-8859-1"?>-->
