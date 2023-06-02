@@ -19,14 +19,19 @@ public class Conexion {
         if (dataSource == null) {
             try {
                 Properties props = new Properties();
-                InputStream is;
+//                InputStream is;
 
-                String environment = System.getProperty("/etc/secrets/production.env");
-                if(environment != null) {
-//                    props.load(new FileInputStream(environment));
-                    props.load(new FileInputStream("/etc/secrets/production.env"));
+//                String environment = System.getProperty("/etc/secrets/production.env");
+                InputStream secrets = Thread.currentThread().getContextClassLoader().getResourceAsStream("/etc/secrets/production.env");
+/*                if(environment != null) {
+                    props.load(new FileInputStream(environment));
                 } else {
                     props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("secret.properties"));
+                }*/
+                if(secrets == null) {
+                    props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("secret.properties"));
+                } else {
+                    props.load(secrets);
                 }
                 props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
                 String URL = props.getProperty("db.url");
