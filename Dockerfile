@@ -3,7 +3,7 @@
 #ENTRYPOINT ["java","-jar","/CRUD_transacciones.jar"]
 
 # Usa una imagen base que incluya Tomcat
-FROM tomcat:9.0.64
+FROM tomcat:9.0.64-jdk11
 
 MAINTAINER Michael
 
