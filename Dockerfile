@@ -11,7 +11,7 @@ MAINTAINER Michael
 EXPOSE 8080
 
 # Copia el archivo war a la carpeta webapps de Tomcat
-COPY CRUD_transacciones-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/CRUD_transacciones.war
+COPY CRUD_transacciones.war /usr/local/tomcat/webapps/
 
 # Comando para iniciar Tomcat al ejecutar el contenedor
 CMD ["catalina.sh", "run"]
